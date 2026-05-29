@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<!--
+  protege_example.owl
+  -------------------
+  OWL Ontology: AI Research Domain
+  Author: Student Submission
+
+  This OWL file defines the ontology for the AI Research Knowledge Graph.
+  It can be opened in Protégé (https://protege.stanford.edu) to visualize
+  and reason over the class hierarchy.
+
+  Classes defined:
+    - Person → Researcher
+    - Organization → University
+    - Artifact → Paper
+    - Concept → Topic
+
+  Object Properties (Relations):
+    - worksAt        (Researcher → University)
+    - researches     (Researcher → Topic)
+    - published      (Researcher → Paper)
+    - isRelatedTo    (Topic → Topic)
+-->
+
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:ai="http://example.org/ai-research#"
+    xml:base="http://example.org/ai-research">
+
+  <!-- Ontology Declaration -->
+  <owl:Ontology rdf:about="http://example.org/ai-research">
+    <rdfs:label>AI Research Ontology</rdfs:label>
+    <rdfs:comment>A knowledge graph ontology for AI researchers, universities, topics, and papers.</rdfs:comment>
+  </owl:Ontology>
+
+  <!-- ───── CLASS DEFINITIONS ───── -->
+
+  <owl:Class rdf:about="ai:Person">
+    <rdfs:label>Person</rdfs:label>
+  </owl:Class>
+
+  <owl:Class rdf:about="ai:Researcher">
+    <rdfs:label>Researcher</rdfs:label>
+    <rdfs:subClassOf rdf:resource="ai:Person"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="ai:Organization">
+    <rdfs:label>Organization</rdfs:label>
+  </owl:Class>
+
+  <owl:Class rdf:about="ai:University">
+    <rdfs:label>University</rdfs:label>
+    <rdfs:subClassOf rdf:resource="ai:Organization"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="ai:Artifact">
+    <rdfs:label>Artifact</rdfs:label>
+  </owl:Class>
+
+  <owl:Class rdf:about="ai:Paper">
+    <rdfs:label>Paper</rdfs:label>
+    <rdfs:subClassOf rdf:resource="ai:Artifact"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="ai:Topic">
+    <rdfs:label>Topic</rdfs:label>
+  </owl:Class>
+
+  <!-- ───── OBJECT PROPERTIES (Relations) ───── -->
+
+  <owl:ObjectProperty rdf:about="ai:worksAt">
+    <rdfs:label>worksAt</rdfs:label>
+    <rdfs:domain rdf:resource="ai:Researcher"/>
+    <rdfs:range  rdf:resource="ai:University"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="ai:researches">
+    <rdfs:label>researches</rdfs:label>
+    <rdfs:domain rdf:resource="ai:Researcher"/>
+    <rdfs:range  rdf:resource="ai:Topic"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="ai:published">
+    <rdfs:label>published</rdfs:label>
+    <rdfs:domain rdf:resource="ai:Researcher"/>
+    <rdfs:range  rdf:resource="ai:Paper"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="ai:isRelatedTo">
+    <rdfs:label>isRelatedTo</rdfs:label>
+    <rdfs:domain rdf:resource="ai:Topic"/>
+    <rdfs:range  rdf:resource="ai:Topic"/>
+    <rdf:type rdf:resource="owl:SymmetricProperty"/>
+  </owl:ObjectProperty>
+
+  <!-- ───── DATA PROPERTIES ───── -->
+
+  <owl:DatatypeProperty rdf:about="ai:yearBorn">
+    <rdfs:domain rdf:resource="ai:Person"/>
+    <rdfs:range  rdf:resource="xsd:integer"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="ai:yearPublished">
+    <rdfs:domain rdf:resource="ai:Paper"/>
+    <rdfs:range  rdf:resource="xsd:integer"/>
+  </owl:DatatypeProperty>
+
+  <!-- ───── INDIVIDUALS (Instances) ───── -->
+
+  <!-- Researchers -->
+  <ai:Researcher rdf:about="ai:Turing">
+    <rdfs:label>Alan Turing</rdfs:label>
+    <ai:yearBorn rdf:datatype="xsd:integer">1912</ai:yearBorn>
+    <ai:worksAt rdf:resource="ai:MIT"/>
+    <ai:researches rdf:resource="ai:ChessAI"/>
+  </ai:Researcher>
+
+  <ai:Researcher rdf:about="ai:Hinton">
+    <rdfs:label>Geoffrey Hinton</rdfs:label>
+    <ai:yearBorn rdf:datatype="xsd:integer">1947</ai:yearBorn>
+    <ai:worksAt rdf:resource="ai:UniversityOfToronto"/>
+    <ai:researches rdf:resource="ai:DeepLearning"/>
+    <ai:researches rdf:resource="ai:Backpropagation"/>
+  </ai:Researcher>
+
+  <ai:Researcher rdf:about="ai:LeCun">
+    <rdfs:label>Yann LeCun</rdfs:label>
+    <ai:yearBorn rdf:datatype="xsd:integer">1960</ai:yearBorn>
+    <ai:worksAt rdf:resource="ai:NYU"/>
+    <ai:researches rdf:resource="ai:DeepLearning"/>
+  </ai:Researcher>
+
+  <!-- Universities -->
+  <ai:University rdf:about="ai:MIT">
+    <rdfs:label>Massachusetts Institute of Technology</rdfs:label>
+  </ai:University>
+
+  <ai:University rdf:about="ai:UniversityOfToronto">
+    <rdfs:label>University of Toronto</rdfs:label>
+  </ai:University>
+
+  <ai:University rdf:about="ai:NYU">
+    <rdfs:label>New York University</rdfs:label>
+  </ai:University>
+
+  <!-- Topics -->
+  <ai:Topic rdf:about="ai:DeepLearning">
+    <rdfs:label>Deep Learning</rdfs:label>
+    <ai:isRelatedTo rdf:resource="ai:NeuralNetworks"/>
+    <ai:isRelatedTo rdf:resource="ai:Backpropagation"/>
+  </ai:Topic>
+
+  <ai:Topic rdf:about="ai:NeuralNetworks">
+    <rdfs:label>Neural Networks</rdfs:label>
+  </ai:Topic>
+
+  <ai:Topic rdf:about="ai:Backpropagation">
+    <rdfs:label>Backpropagation</rdfs:label>
+    <ai:isRelatedTo rdf:resource="ai:NeuralNetworks"/>
+  </ai:Topic>
+
+  <ai:Topic rdf:about="ai:ChessAI">
+    <rdfs:label>Chess AI</rdfs:label>
+  </ai:Topic>
+
+  <!-- Papers -->
+  <ai:Paper rdf:about="ai:ComputingMachineryPaper">
+    <rdfs:label>Computing Machinery and Intelligence</rdfs:label>
+    <ai:yearPublished rdf:datatype="xsd:integer">1950</ai:yearPublished>
+  </ai:Paper>
+
+</rdf:RDF>
